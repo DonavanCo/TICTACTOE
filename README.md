@@ -4,4 +4,6 @@
 
 ### A repository updating daily with changes to TICTACTOE.py
 
-#### LATEST UPDATE 4/15/24 3:00 AM
+#### LATEST UPDATE 4/15/24 3:50 AM
+
+#### ADDED IMPORT TO TICTACTOE.PY and FUNCTION
