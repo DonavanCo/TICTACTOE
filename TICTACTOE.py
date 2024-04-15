@@ -1,3 +1,4 @@
+import random
 
 def print_board(board):
     
