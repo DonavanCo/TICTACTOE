@@ -53,7 +53,7 @@ def game():
     
     while True:
         print_board(board)
-        
+        #players turn
         if players[turn] == 'X':
             row = int(input("Enter row number (0, 1, or 2): "))
             col = int(input("Enter column number (0, 1, or 2): "))
@@ -61,8 +61,9 @@ def game():
             if board[row][col] != ' ':
                 print("Cell already occupied. Try again.")
                 continue
-
+                
             board[row][col] = players[turn]
+        #computer turn
         else:
             print("Computer's turn")
             move = computer(board)
@@ -71,6 +72,7 @@ def game():
                 board[row][col] = players[turn]
 
         winner = check_winner(board)
+        #check for winner
         if winner:
             print_board(board)
             print(f"Player {winner} wins!")
