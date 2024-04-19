@@ -55,6 +55,35 @@ def reset_game():
     current_player = 'X'
     label.config(text="Player X's turn")
 
+def handle_click(row, col):
+    global current_player
+    
+    if board[row][col] == ' ':
+        board[row][col] = current_player
+        button_texts[row][col].set(current_player)
+        winner = check_winner(board)
+        if winner:
+            label.config(text=f"Player {winner} wins!")
+            disable_buttons()
+        elif is_board_full(board):
+            label.config(text="It's a draw!")
+            disable_buttons()
+        else:
+            current_player = 'X' if current_player == 'O' else 'O'
+            if current_player == 'O':
+                row, col = computer(board)
+                board[row][col] = current_player
+                button_texts[row][col].set(current_player)
+                winner = check_winner(board)
+                if winner:
+                    label.config(text=f"Player {winner} wins!")
+                    disable_buttons()
+                elif is_board_full(board):
+                    label.config(text="It's a draw!")
+                    disable_buttons()
+                else:
+                    current_player = 'X'
+                    
 # Create NEW Board for v2      
 board = [[' ' for _ in range(3)] for _ in range(3)]
 
@@ -62,6 +91,22 @@ board = [[' ' for _ in range(3)] for _ in range(3)]
 root = tk.Tk()
 root.title("Tic Tac Toe")
 
+# Create rest of buttons
+buttons = []
+button_texts = []
+for i in range(3):
+    row_buttons = []
+    row_texts = []
+    for j in range(3):
+        text = tk.StringVar()
+        text.set(' ')
+        button = tk.Button(root, textvariable=text, font=('Arial', 30), width=4, height=2, command=lambda row=i, col=j: handle_click(row,col))
+        button.grid(row=i, column=j, padx=5, pady=5)
+        row_buttons.append(button)
+        row_texts.append(text)
+    buttons.append(row_buttons)
+    button_texts.append(row_texts)
+        
 
 # Create label
 current_player = 'X'
