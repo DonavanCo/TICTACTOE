@@ -1,13 +1,6 @@
+#v2 of tictactoe uses GUI to play game
+import tkinter as tk
 import random #for computer opponent
-
-def print_board(board):
-    
-    #Prints Tic Tac Toe board.
-    
-    for row in board:
-        print (" | ".join(row))
-        print ("-" * 5)
-    return 0
 
 def check_winner(board):
     
@@ -44,45 +37,39 @@ def computer(board): #Computer opponent
     
     empty_cell = [(i,j) for i in range(3) for j in range(3) if board[i][j] == ' ']
     return random.choice(empty_cell) if empty_cell else None
+
+def disable_buttons():
+    for row_buttons in buttons:
+        for button in row_buttons:
+            button.config(state=tk.DISABLED)
+
+def reset_game():
+    global current_player, board, button_texts
     
-def game():
-    #Start of Game
-    board = [[' ' for _ in range(3)] for _ in range(3)]
-    players = ['X', '0']
-    turn = 0
+    for row in range(3):
+        for col in range(3):
+            board[row][col] = ' '
+            button_texts[row][col].set(' ')
+            buttons[row][col].config(state=tk.NORMAL)
     
-    while True:
-        print_board(board)
-        #players turn
-        if players[turn] == 'X':
-            row = int(input("Enter row number (0, 1, or 2): "))
-            col = int(input("Enter column number (0, 1, or 2): "))
+    current_player = 'X'
+    label.config(text="Player X's turn")
 
-            if board[row][col] != ' ':
-                print("Cell already occupied. Try again.")
-                continue
-                
-            board[row][col] = players[turn]
-        #computer turn
-        else:
-            print("Computer's turn")
-            move = computer(board)
-            if move:
-                row, col = move
-                board[row][col] = players[turn]
+# Create NEW Board for v2      
+board = [[' ' for _ in range(3)] for _ in range(3)]
 
-        winner = check_winner(board)
-        #check for winner
-        if winner:
-            print_board(board)
-            print(f"Player {winner} wins!")
-            break
-        elif is_board_full(board):
-            print_board(board)
-            print("It's a draw!")
-            break
+# Create Tkinter
+root = tk.Tk()
+root.title("Tic Tac Toe")
 
-        turn = (turn + 1) % 2
 
-if __name__ == "__main__":
-    game()
+# Create label
+current_player = 'X'
+label = tk.Label(root, text="Player X's turn", font=('Arial', 14))
+label.grid(row=3, columnspan=3, pady=10)
+
+# Create reset button
+reset_button = tk.Button(root, text="Reset", font=('Arial', 14), command=reset_game)
+reset_button.grid(row=4, columnspan=3, pady=10)
+
+root.mainloop()
