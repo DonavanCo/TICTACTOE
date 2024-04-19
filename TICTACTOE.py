@@ -2,6 +2,8 @@
 import tkinter as tk
 import random #for computer opponent
 
+
+
 def check_winner(board):
     
     #Checks if there's a winner
@@ -38,12 +40,12 @@ def computer(board): #Computer opponent
     empty_cell = [(i,j) for i in range(3) for j in range(3) if board[i][j] == ' ']
     return random.choice(empty_cell) if empty_cell else None
 
-def disable_buttons():
+def disable_buttons(): #Stops the game from continuing
     for row_buttons in buttons:
         for button in row_buttons:
             button.config(state=tk.DISABLED)
 
-def reset_game():
+def reset_game(): #Starts new game
     global current_player, board, button_texts
     
     for row in range(3):
@@ -55,7 +57,9 @@ def reset_game():
     current_player = 'X'
     label.config(text="Player X's turn")
 
-def handle_click(row, col):
+
+
+def handle_click(row, col): #GUI for GAME v2
     global current_player
     
     if board[row][col] == ' ':
@@ -63,7 +67,7 @@ def handle_click(row, col):
         button_texts[row][col].set(current_player)
         winner = check_winner(board)
         if winner:
-            label.config(text=f"Player {winner} wins!")
+            label.config(text=f"Player {winner} wins!",foreground='green')
             disable_buttons()
         elif is_board_full(board):
             label.config(text="It's a draw!")
@@ -76,7 +80,7 @@ def handle_click(row, col):
                 button_texts[row][col].set(current_player)
                 winner = check_winner(board)
                 if winner:
-                    label.config(text=f"Player {winner} wins!")
+                    label.config(text=f"Player {winner} wins!",foreground='#87d643')
                     disable_buttons()
                 elif is_board_full(board):
                     label.config(text="It's a draw!")
@@ -91,6 +95,10 @@ board = [[' ' for _ in range(3)] for _ in range(3)]
 root = tk.Tk()
 root.title("Tic Tac Toe")
 
+# Create X and O button colors
+
+
+
 # Create rest of buttons
 buttons = []
 button_texts = []
@@ -100,21 +108,26 @@ for i in range(3):
     for j in range(3):
         text = tk.StringVar()
         text.set(' ')
-        button = tk.Button(root, textvariable=text, font=('Arial', 30), width=4, height=2, command=lambda row=i, col=j: handle_click(row,col))
+        button = tk.Button(root, textvariable=text, font=('Arial', 30), width=4, foreground='#6b3b06', height=2, command=lambda row=i, col=j: handle_click(row,col), background='pink')
         button.grid(row=i, column=j, padx=5, pady=5)
         row_buttons.append(button)
         row_texts.append(text)
     buttons.append(row_buttons)
     button_texts.append(row_texts)
-        
+    
+#Show X and O button colors 
 
+
+        
+        
 # Create label
 current_player = 'X'
-label = tk.Label(root, text="Player X's turn", font=('Arial', 14))
+label = tk.Label(root, text="Player X's turn", font=('Arial', 14), foreground= '#6b3b06')
 label.grid(row=3, columnspan=3, pady=10)
 
 # Create reset button
-reset_button = tk.Button(root, text="Reset", font=('Arial', 14), command=reset_game)
+reset_button = tk.Button(root, text="Reset", font=('Arial', 14), command=reset_game,background='pink' ,foreground= '#031349')
+
 reset_button.grid(row=4, columnspan=3, pady=10)
 
 root.mainloop()
