@@ -13,3 +13,5 @@
 #### Working draft of game 4/17/24 1:33 PM 
 
 #### V2 of game began on 4/18/24 10:43 PM
+
+#### Girlfriend asked to make GUI box pink and I created the other colors for labels 4/19/24 12:56
